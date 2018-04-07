@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/milestoneContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="200dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:background="@drawable/milestone_bubble"
+        android:layout_above="@id/milestoneArrow"
+        android:padding="10dp"
+        android:textColor="#000"
+        android:text="Test Milestone"/>
+
+    <ImageView
+        android:id="@+id/milestoneArrow"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:rotation="180"
+        android:background="@drawable/milestone_arrow"
+        android:layout_above="@+id/scrollingLayout"/>
+
+    <LinearLayout
+        android:id="@+id/scrollingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="5dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="#666666"/>
+
+        <ImageView
+            android:id="@+id/milestoneButton"
+            android:tag="set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/milestone_circle_filled"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="5dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="#666666"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

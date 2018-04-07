@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "265508959880",
+    "firebase_url": "https://valentino-journeyl.firebaseio.com",
+    "project_id": "valentino-journeyl",
+    "storage_bucket": "valentino-journeyl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265508959880:android:c4c7006a9e5b3003",
+        "android_client_info": {
+          "package_name": "com.valentino.journeyl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265508959880-v1q0qcs8iaq0hn7f447cq0jumgh0hv2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmqqXlmqxTD56sIhUiMRdT-swOmMDeEKc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

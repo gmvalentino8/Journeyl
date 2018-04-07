@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Journeyl</string>
+    <string name="title_activity_create_goal">CreateGoalActivity</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="create_goal">Create Goal</string>
+    <string name="name">Name</string>
+    <string name="tags">Tags</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="milestone_ratings">Milestone Ratings</string>
+    <string name="rating_1">Rating 1</string>
+    <string name="rating_2">Rating 2</string>
+    <string name="rating_3">Rating 3</string>
+    <string name="rating_4">Rating 4</string>
+    <string name="reflection">Written Reflection</string>
+    <string name="submit">Submit</string>
+</resources>

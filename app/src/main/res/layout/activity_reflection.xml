@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.valentino.journeyl.activity.ReflectionActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/reflectionToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorPrimaryDark"
+        app:titleTextColor="@color/white"
+        app:title="Reflection"
+        app:titleTextAppearance="@style/TitleText" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/reflectionToolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/infoCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardElevation="15dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/goalName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Goal Name"
+                        android:textSize="24sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/milestoneName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/goalName"
+                        android:text="Milestone Name"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/white"
+                        android:textStyle="italic"
+                        />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/ratingsCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/infoCardView"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardElevation="15dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/ratingTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/milestone_ratings"
+                        android:textSize="24sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        />
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ratingTextView"
+                        android:columnCount="2"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/ratingOneTextView"
+                            android:layout_height="40dp"
+                            android:layout_width="0dp"
+                            android:layout_columnWeight="2"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:text="@string/rating_1"/>
+
+                        <SeekBar
+                            android:id="@+id/ratingOneSeekbar"
+                            android:layout_width="0dp"
+                            android:layout_columnWeight="3"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
+                            android:progressTint="@color/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/ratingTwoTextView"
+                            android:layout_height="40dp"
+                            android:layout_width="0dp"
+                            android:layout_columnWeight="2"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:text="@string/rating_2"/>
+
+                        <SeekBar
+                            android:id="@+id/ratingTwoSeekbar"
+                            android:layout_width="0dp"
+                            android:layout_columnWeight="3"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="10dp"
+                            android:progressTint="@color/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/ratingThreeTextView"
+                            android:layout_height="40dp"
+                            android:layout_width="0dp"
+                            android:layout_columnWeight="2"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:text="@string/rating_3"/>
+
+                        <SeekBar
+                            android:id="@+id/ratingThreeSeekbar"
+                            android:layout_width="0dp"
+                            android:layout_columnWeight="3"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
+                            android:progressTint="@color/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/ratingFourTextView"
+                            android:layout_height="40dp"
+                            android:layout_width="0dp"
+                            android:layout_columnWeight="2"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:text="@string/rating_4"/>
+
+                        <SeekBar
+                            android:id="@+id/ratingFourSeekbar"
+                            android:layout_width="0dp"
+                            android:layout_columnWeight="3"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
+                            android:progressTint="@color/colorAccent"/>
+
+                    </GridLayout>
+
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/reflectionCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/ratingsCardView"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardElevation="15dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/reflectionTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reflection"
+                        android:textSize="24sp"
+                        android:layout_margin="10dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        />
+
+
+                    <EditText
+                        android:id="@+id/reflectionEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="90dp"
+                        android:layout_below="@+id/reflectionTextView"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:background="@drawable/style_login_field"
+                        android:inputType="text"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/reflectionCardView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="@color/colorAccent"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp">
+
+                <TextView
+                    android:id="@+id/submitButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"/>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
