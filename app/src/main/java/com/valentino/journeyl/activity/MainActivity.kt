@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: GoalAdapter
-    var goalData = arrayListOf<Goal>()
+    var goalData = arrayListOf<Pair<Goal, List<String>>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +29,12 @@ class MainActivity : AppCompatActivity() {
         goalsRecyclerView.layoutManager = linearLayoutManager
         adapter = GoalAdapter(goalData)
         goalsRecyclerView.adapter = adapter
-        GoalDAO.getGoals {
-            goalData.add(it!!)
-            adapter.notifyDataSetChanged()
+        GoalDAO.getGoals {goal ->
+            GoalDAO.getTags(goal!!) {
+                goalData.add(Pair(goal, it))
+                Log.d("TAG", it.toString())
+                adapter.notifyDataSetChanged()
+            }
         }
         fab.setOnClickListener {
             val intent = Intent(this, CreateGoalActivity::class.java)

@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.item_roadmap_vertical.view.*
  * Created by Valentino on 4/7/18.
  */
 
-class GoalAdapter(private val goalData: List<Goal>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GoalAdapter(private val goalData: List<Pair<Goal, List<String>>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return  goalData.size
@@ -39,17 +39,18 @@ class GoalAdapter(private val goalData: List<Goal>) : RecyclerView.Adapter<Recyc
     class GoalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var view: View = itemView
 
-        fun bindData(goal: Goal) {
-            view.goalName.text = goal.description
-            //view.goalTags.text = goal.tag.joinToString()
+        fun bindData(goal: Pair<Goal, List<String>>) {
+            view.goalName.text = goal.first.description
+            view.goalTags.text = goal.second.joinToString(", ")
             view.setOnClickListener({
-                goToRoadmapActivity(goal)
+                goToRoadmapActivity(goal.first, goal.second)
             })
         }
 
-        fun goToRoadmapActivity(goal: Goal) {
+        fun goToRoadmapActivity(goal: Goal, tags: List<String>) {
             val intent = Intent(view.context, RoadmapActivity::class.java)
             intent.putExtra("goal", goal)
+            intent.putExtra("tags", tags.toTypedArray())
             ContextCompat.startActivity(view.context, intent, null)
         }
     }

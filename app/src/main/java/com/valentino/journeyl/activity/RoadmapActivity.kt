@@ -28,6 +28,7 @@ class RoadmapActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_roadmap)
         val goal = intent.getParcelableExtra<Goal>("goal")
+        roadmapToolbar.subtitle = goal.description
 
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         roadmapRecyclerView.layoutManager = linearLayoutManager

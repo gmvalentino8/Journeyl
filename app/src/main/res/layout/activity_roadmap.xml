@@ -16,7 +16,8 @@
             android:layout_height="80dp"
             android:background="@color/colorPrimaryDark"
             app:titleTextColor="@color/white"
-            app:title="Goals"
+            app:title="Roadmap"
+            app:subtitleTextColor="@color/white"
             app:titleTextAppearance="@style/TitleText" />
 
 

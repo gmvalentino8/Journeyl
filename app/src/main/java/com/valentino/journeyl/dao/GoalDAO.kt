@@ -1,5 +1,6 @@
 package com.valentino.journeyl.dao
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -53,14 +54,23 @@ object GoalDAO {
         }
     }
 
-    fun getTags(goal: Goal, completion: (String) -> Unit) {
+    fun getTags(goal: Goal, completion: (List<String>) -> Unit) {
+        var tags = arrayListOf<String>()
+        mDatabase.child("goal-tags").child(goal.gid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot?) {
+                Log.d("Returning tags", tags.toString())
+                completion(tags)
+            }
+            override fun onCancelled(p0: DatabaseError?) {}
+        })
         mDatabase.child("goal-tags").child(goal.gid).addChildEventListener(object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError?) {}
             override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
             override fun onChildChanged(p0: DataSnapshot?, p1: String?) {}
             override fun onChildRemoved(p0: DataSnapshot?) {}
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-                completion(p0?.key!!)
+                tags.add(p0?.key!!)
+                Log.d("Added Tag", tags.toString())
             }
         })
     }

@@ -23,7 +23,7 @@ class CreateGoalActivity : AppCompatActivity() {
     }
 
     private fun tagsToArray(tags: String): ArrayList<String> {
-        tags.replace("\\s","")
+        tags.replace("\\s".toRegex(),"")
         val tagList = tags.split(",")
         return ArrayList(tagList)
     }
