@@ -8,26 +8,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.valentino.journeyl.R
+import com.valentino.journeyl.activity.CreateMilestoneActivity
 import com.valentino.journeyl.activity.MilestoneActivity
+import com.valentino.journeyl.activity.ReflectionActivity
 import com.valentino.journeyl.model.Milestone
+import com.valentino.journeyl.model.Goal
 import kotlinx.android.synthetic.main.item_roadmap_vertical.view.*
 
 /**
  * Created by Valentino on 4/4/18.
  */
 
-class RoadmapAdapter(private val milestoneData: List<Milestone>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RoadmapAdapter(private val milestoneData: List<Milestone>, val goal: Goal) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return  milestoneData.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position == milestoneData.size - 1) {
-            return 1
+        val milestone = milestoneData[position]
+        if (milestone.completed) {
+            return 0
         }
         else {
-            return 0
+            return 1
         }
     }
 
@@ -37,25 +41,24 @@ class RoadmapAdapter(private val milestoneData: List<Milestone>) : RecyclerView.
             root.milestoneButton.setImageResource(R.drawable.milestone_circle_empty)
             root.milestoneButton.tag = "Incomplete"
         }
-        return RoadmapsViewHolder(root)
+        return RoadmapViewHolder(root, goal)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = milestoneData[position]
-        val placeHolder = holder as RoadmapsViewHolder
+        val placeHolder = holder as RoadmapViewHolder
         placeHolder.bindData(data)
     }
 
-    class RoadmapsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class RoadmapViewHolder(itemView: View, val goal: Goal) : RecyclerView.ViewHolder(itemView) {
         private var view: View = itemView
 
         fun bindData(milestone: Milestone) {
             view.milestoneContent.text = milestone.description
 
-
             if (view.milestoneButton.tag == "Incomplete") {
                 view.milestoneButton.setOnLongClickListener {
-                    Toast.makeText(view.context, "Goal Completed", Toast.LENGTH_SHORT).show()
+                    goToReflectionActivity(milestone)
                     true
                 }
             }
@@ -70,9 +73,17 @@ class RoadmapAdapter(private val milestoneData: List<Milestone>) : RecyclerView.
             }
         }
 
-        fun goToMilestoneActivity(milestone: Milestone) {
+        private fun goToMilestoneActivity(milestone: Milestone) {
             val intent = Intent(view.context, MilestoneActivity::class.java)
-            intent.putExtra("Milestone", milestone.description)
+            intent.putExtra("milestone", milestone)
+            intent.putExtra("goal", goal)
+            startActivity(view.context, intent, null)
+        }
+
+        private fun goToReflectionActivity(milestone: Milestone) {
+            val intent = Intent(view.context, ReflectionActivity::class.java)
+            intent.putExtra("milestone", milestone)
+            intent.putExtra("goal", goal)
             startActivity(view.context, intent, null)
         }
     }

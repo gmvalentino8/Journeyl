@@ -10,6 +10,7 @@ import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import com.valentino.journeyl.R
 import com.valentino.journeyl.adapter.GoalAdapter
+import com.valentino.journeyl.dao.GoalDAO
 import com.valentino.journeyl.model.Goal
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,12 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: GoalAdapter
-    var goalData = arrayListOf<Goal>(
-            Goal("1", "Test 1", arrayListOf("Tag 1", "Tag 2", "Tag 3")),
-            Goal("2", "Test 2", arrayListOf("Tag 1", "Tag 2", "Tag 3", "Tag 4")),
-            Goal("3", "Test 3", arrayListOf("Tag 1", "Tag 2")),
-            Goal("4", "Test 4", arrayListOf("Tag 1", "Tag 2", "Tag 3", "Tag 1", "Tag 2", "Tag 3"))
-            )
+    var goalData = arrayListOf<Goal>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +28,10 @@ class MainActivity : AppCompatActivity() {
         goalsRecyclerView.layoutManager = linearLayoutManager
         adapter = GoalAdapter(goalData)
         goalsRecyclerView.adapter = adapter
-        goalsRecyclerView.smoothScrollToPosition(goalData.size - 1)
+        GoalDAO.getGoals {
+            goalData.add(it!!)
+            adapter.notifyDataSetChanged()
+        }
         fab.setOnClickListener {
             val intent = Intent(this, CreateGoalActivity::class.java)
             startActivity(intent)

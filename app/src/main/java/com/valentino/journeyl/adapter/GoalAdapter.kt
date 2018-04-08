@@ -41,7 +41,7 @@ class GoalAdapter(private val goalData: List<Goal>) : RecyclerView.Adapter<Recyc
 
         fun bindData(goal: Goal) {
             view.goalName.text = goal.description
-            view.goalTags.text = goal.tag.joinToString()
+            //view.goalTags.text = goal.tag.joinToString()
             view.setOnClickListener({
                 goToRoadmapActivity(goal)
             })
@@ -49,7 +49,7 @@ class GoalAdapter(private val goalData: List<Goal>) : RecyclerView.Adapter<Recyc
 
         fun goToRoadmapActivity(goal: Goal) {
             val intent = Intent(view.context, RoadmapActivity::class.java)
-            intent.putExtra("Roadmap", goal.gid)
+            intent.putExtra("goal", goal)
             ContextCompat.startActivity(view.context, intent, null)
         }
     }

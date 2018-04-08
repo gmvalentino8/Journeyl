@@ -84,7 +84,7 @@
                     android:id="@+id/tagsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tags"
+                    android:text="@string/explore"
                     android:textSize="28sp"
                     android:layout_margin="10dp"
                     android:textColor="@color/white"/>

@@ -10,15 +10,13 @@
         android:id="@+id/milestoneContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="200dp"
         android:layout_centerVertical="true"
         android:textSize="24sp"
         android:background="@drawable/milestone_bubble"
         android:layout_toEndOf="@id/milestoneArrow"
         android:layout_marginEnd="20dp"
         android:padding="10dp"
-        android:textColor="@color/white"
-        android:text="Test Milestone"/>
+        android:textColor="@color/white"/>
 
     <ImageView
         android:id="@+id/milestoneArrow"

@@ -20,7 +20,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MilestoneActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.UserDialog"/>
         <activity
             android:name=".activity.LoginActivity"
             android:noHistory="true"
