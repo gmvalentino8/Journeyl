@@ -75,16 +75,19 @@ object GoalDAO {
         })
     }
 
-    fun getSimilarGoals(goal: Goal, completion: (List<Goal?>) -> Unit) {
+    fun getSimilarGoals(goal: Goal, completion: (List<Goal>) -> Unit) {
         getSimilarGoalList(goal) { goalsList->
             mDatabase.child("goals").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot?) {
-                    var goals = ArrayList<Goal>()
-                    val goalsMap = p0?.value as DataSnapshot
-                    for (item in goalsMap.key) {
-                        Log.d("Similar Goals", "Item: $item")
+                    val goals = ArrayList<Goal>()
+                    val goalsMap = p0?.children
+                    for (child in goalsMap!!.iterator()) {
+                        val item = child.getValue(Goal::class.java)
+                        item?.gid = child.key
+                        goals.add(item!!)
                     }
-                    Log.d("Similar Goals", "Snapshot: $p0")
+                    Log.d("Similar Goals", "Snapshot: $goals")
+                    completion(goals)
                 }
                 override fun onCancelled(p0: DatabaseError?) {}
             })
