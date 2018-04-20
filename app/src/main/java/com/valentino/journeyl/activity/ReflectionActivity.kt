@@ -21,7 +21,7 @@ class ReflectionActivity : AppCompatActivity() {
         milestoneName.text = milestone.description
 
         ratingFourSpinner.adapter = ArrayAdapter(this,
-                                                android.R.layout.simple_spinner_dropdown_item, levels)
+                                                    R.layout.item_spinner, levels)
 
         submitButton.setOnClickListener({
             milestone.rating1 = ratingOneSeekbar.progress
