@@ -22,10 +22,10 @@ class MilestoneActivity : AppCompatActivity() {
         val goal = intent.getParcelableExtra<Goal>("goal")
         goalName.text = goal.description
         milestoneName.text = milestone.description
-        ratingOneSeekbar.setProgress(milestone?.rating1!!, true)
-        ratingTwoSeekbar.setProgress(milestone.rating2!!, true)
-        ratingThreeSeekbar.setProgress(milestone.rating3!!, true)
-        ratingFourSeekbar.setProgress(milestone.rating4!!, true)
+        milestone?.rating1?.let { ratingOneSeekbar.setProgress(it, true) }
+        milestone.rating2?.let { ratingTwoSeekbar.setProgress(it, true) }
+        milestone.rating3?.let { ratingThreeSeekbar.setProgress(it, true) }
+        //ratingFourSeekbar.setProgress(milestone.rating4!!, true)
         reflectionEditText.setText(milestone.reflection)
     }
 }

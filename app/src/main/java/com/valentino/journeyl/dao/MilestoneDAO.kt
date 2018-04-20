@@ -44,7 +44,7 @@ object MilestoneDAO {
                 val key = p0?.key!!
                 getMilestone(key, completionAdded)
 
-                mDatabase.child("milestones").child(p0?.key).addChildEventListener(object : ChildEventListener {
+                mDatabase.child("milestones").child(p0.key).addChildEventListener(object : ChildEventListener {
                     override fun onCancelled(p0: DatabaseError?) {}
                     override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
                     override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
@@ -66,24 +66,19 @@ object MilestoneDAO {
     }
 
     fun postReflection(milestone: Milestone) {
-        val rating = calculateRating(milestone.rating1!!, milestone.rating2!!, milestone.rating3!!, milestone.rating4!!)
         val reflectionUpdate = hashMapOf(
                 "completed" to true,
                 "rating1" to milestone.rating1!!,
                 "rating2" to milestone.rating2!!,
                 "rating3" to milestone.rating3!!,
                 "rating4" to milestone.rating4!!,
-                "rating" to rating,
                 "reflection" to milestone.reflection
         )
         mDatabase.child("milestones").child(milestone.mid).updateChildren(reflectionUpdate)
     }
 
-    fun calculateRating(rating1: Int, rating2: Int, rating3: Int, rating4: Int): Double {
-        return 5.0
-    }
 
-    fun getRelatedMilestones(goal: Goal, completion: (Pair<Milestone, Goal>) -> Unit) {
+    fun getRelatedMilestones(goalsList: List<String>, completion: (Pair<Milestone, Goal>) -> Unit) {
 
     }
 

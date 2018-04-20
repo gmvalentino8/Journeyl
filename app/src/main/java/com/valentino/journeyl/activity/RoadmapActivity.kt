@@ -13,7 +13,9 @@ import kotlinx.android.synthetic.main.activity_roadmap.*
 import android.support.v7.widget.LinearSnapHelper
 import android.support.v7.widget.SnapHelper
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.ImageView
+import com.valentino.journeyl.dao.GoalDAO
 import com.valentino.journeyl.dao.MilestoneDAO
 import com.valentino.journeyl.model.Goal
 import java.util.*
@@ -29,6 +31,12 @@ class RoadmapActivity : AppCompatActivity() {
         setContentView(R.layout.activity_roadmap)
         val goal = intent.getParcelableExtra<Goal>("goal")
         roadmapToolbar.subtitle = goal.description
+
+        GoalDAO.getSimilarGoals(goal) {
+            Log.d("Similar Goals", it.toString())
+        }
+
+
 
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         roadmapRecyclerView.layoutManager = linearLayoutManager

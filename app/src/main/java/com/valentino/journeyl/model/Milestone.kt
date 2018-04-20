@@ -10,5 +10,5 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Milestone(var mid: String? = null, var description: String = "", var time: Long = 0,
                      var completed: Boolean = false, var rating1: Int? = null,
-                     var rating2: Int? = null, var rating3: Int? = null, var rating4: Int? = null,
-                     var rating: Double? = null, var reflection: String? = null) : Parcelable
+                     var rating2: Int? = null, var rating3: Int? = null,
+                     var rating4: String? = null, var reflection: String? = null) : Parcelable

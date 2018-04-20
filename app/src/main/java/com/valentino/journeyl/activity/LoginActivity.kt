@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = mAuth!!.currentUser
+        val currentUser = mAuth?.currentUser
         updateUI(currentUser)
     }
 
@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        val user = mAuth!!.currentUser
+                        val user = mAuth?.currentUser
                         updateUI(user)
                     } else {
                         // If sign in fails, display a message to the user.
@@ -82,7 +82,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        val user = mAuth!!.currentUser
+                        val user = mAuth?.currentUser
                         updateUI(user)
                     } else {
                         // If sign in fails, display a message to the user.
@@ -102,7 +102,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun signOut() {
-        mAuth!!.signOut()
+        mAuth?.signOut()
         updateUI(null)
     }
     
@@ -151,16 +151,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = ProgressDialog(this)
-            mProgressDialog!!.setMessage("Loading")
-            mProgressDialog!!.isIndeterminate = true
+            mProgressDialog?.setMessage("Loading")
+            mProgressDialog?.isIndeterminate = true
         }
 
-        mProgressDialog!!.show()
+        mProgressDialog?.show()
     }
 
     private fun hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing()) {
-            mProgressDialog!!.dismiss()
+        if (mProgressDialog != null && mProgressDialog?.isShowing()!!) {
+            mProgressDialog?.dismiss()
         }
     }
 

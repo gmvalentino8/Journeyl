@@ -41,7 +41,6 @@ class MilestoneAdapter(private val data: List<Pair<Milestone, Goal>>) : Recycler
 
         fun bindData(milestone: Milestone, goal: Goal) {
             view.descriptionTextView.text = milestone.description
-            view.ratingTextView.text = milestone.rating.toString()
             view.setOnClickListener({
                 goToMilestoneActivity(milestone, goal)
             })

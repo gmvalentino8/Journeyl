@@ -75,9 +75,55 @@ object GoalDAO {
         })
     }
 
-    fun getSimilarGoals(goal: Goal) {
-        getTags(goal) {
+    fun getSimilarGoals(goal: Goal, completion: (List<Goal?>) -> Unit) {
+        getSimilarGoalList(goal) { goalsList->
+            mDatabase.child("goals").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(p0: DataSnapshot?) {
+                    var goals = ArrayList<Goal>()
+                    val goalsMap = p0?.value as DataSnapshot
+                    for (item in goalsMap.key) {
+                        Log.d("Similar Goals", "Item: $item")
+                    }
+                    Log.d("Similar Goals", "Snapshot: $p0")
+                }
+                override fun onCancelled(p0: DatabaseError?) {}
+            })
+        }
+    }
 
+    fun getSimilarGoalList(goal: Goal, completion: (List<String>) -> Unit) {
+        var goalHashMap = HashMap<String, Int>()
+        getTags(goal) {tags ->
+            mDatabase.child("tag-goals").addChildEventListener(object: ChildEventListener{
+                override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                    if (p0?.key in tags) {
+
+                        val goals = p0?.value as HashMap<*, *>
+                        for (goal in goals.keys) {
+                            if (goal in goalHashMap.keys) {
+                                goalHashMap[goal as String] = goalHashMap[goal]?.plus(1)!!
+                            } else {
+                                goalHashMap[goal as String] = 1
+                            }
+                        }
+                    }
+                }
+                override fun onCancelled(p0: DatabaseError?) {}
+                override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
+                override fun onChildChanged(p0: DataSnapshot?, p1: String?) {}
+                override fun onChildRemoved(p0: DataSnapshot?) {}
+            })
+            mDatabase.child("tag-goals").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(p0: DataSnapshot?) {
+                    val goalList = ArrayList<String>()
+                    for (pair in goalHashMap.toList().sortedByDescending { (_, value) -> value }) {
+                        goalList.add(pair.first)
+                    }
+                    Log.d("Similar Goals Map", goalHashMap.toString())
+                    completion(goalList)
+                }
+                override fun onCancelled(p0: DatabaseError?) {}
+            })
         }
     }
 

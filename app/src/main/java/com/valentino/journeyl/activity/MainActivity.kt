@@ -25,15 +25,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(mainToolbar)
+
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         goalsRecyclerView.layoutManager = linearLayoutManager
         adapter = GoalAdapter(goalData)
         goalsRecyclerView.adapter = adapter
         GoalDAO.getGoals {goal ->
-            GoalDAO.getTags(goal!!) {
-                goalData.add(Pair(goal, it))
-                Log.d("TAG", it.toString())
-                adapter.notifyDataSetChanged()
+            if (goal != null) {
+                GoalDAO.getTags(goal) {
+                    goalData.add(Pair(goal, it))
+                    Log.d("TAG", it.toString())
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
         fab.setOnClickListener {

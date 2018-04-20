@@ -22,7 +22,7 @@ class ReflectionActivity : AppCompatActivity() {
             milestone.rating1 = ratingOneSeekbar.progress
             milestone.rating2 = ratingTwoSeekbar.progress
             milestone.rating3 = ratingThreeSeekbar.progress
-            milestone.rating4 = ratingFourSeekbar.progress
+            milestone.rating4 = "TODDO"
             milestone.reflection = reflectionEditText.text.toString()
             MilestoneDAO.postReflection(milestone)
             finish()
