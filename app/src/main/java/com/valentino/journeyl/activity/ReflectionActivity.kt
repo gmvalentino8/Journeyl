@@ -10,7 +10,7 @@ import com.valentino.journeyl.model.Milestone
 import kotlinx.android.synthetic.main.activity_reflection.*
 
 class ReflectionActivity : AppCompatActivity() {
-    var levels = arrayOf("Beginner", "Intermediate", "Advanced")
+    private var levels = arrayOf("Beginner", "Intermediate", "Advanced")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,7 @@ class ReflectionActivity : AppCompatActivity() {
             milestone.rating1 = ratingOneSeekbar.progress
             milestone.rating2 = ratingTwoSeekbar.progress
             milestone.rating3 = ratingThreeSeekbar.progress
-            milestone.rating4 = ratingFourSpinner.selectedItem?.toString()
+            milestone.rating4 = ratingFourSpinner.selectedItemPosition
             milestone.reflection = reflectionEditText.text.toString()
             MilestoneDAO.postReflection(milestone)
             finish()
