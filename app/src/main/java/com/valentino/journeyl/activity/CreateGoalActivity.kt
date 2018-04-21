@@ -24,6 +24,7 @@ class CreateGoalActivity : AppCompatActivity() {
 
     private fun tagsToArray(tags: String): ArrayList<String> {
         tags.replace("\\s".toRegex(),"")
+        tags.toLowerCase()
         val tagList = tags.split(",")
         return ArrayList(tagList)
     }

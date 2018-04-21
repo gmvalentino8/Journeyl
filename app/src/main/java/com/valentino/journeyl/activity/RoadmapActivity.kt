@@ -32,9 +32,11 @@ class RoadmapActivity : AppCompatActivity() {
         val goal = intent.getParcelableExtra<Goal>("goal")
         roadmapToolbar.subtitle = goal.description
 
-        GoalDAO.getSimilarGoals(goal) {
-            Log.d("Similar Goals", it.toString())
+
+        MilestoneDAO.getRelatedMilestones(goal) {
+            Log.d("Similar Milestones", it.toString())
         }
+
 
 
 

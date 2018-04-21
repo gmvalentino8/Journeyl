@@ -12,12 +12,10 @@ import com.valentino.journeyl.model.Goal
 
 object GoalDAO {
     private val mDatabase: DatabaseReference
-    val currentUser: FirebaseUser?
 
     init {
         val mInstance = FirebaseDatabase.getInstance()
         mDatabase = mInstance.reference
-        currentUser = FirebaseAuth.getInstance().currentUser
     }
 
     fun getGoal(gid: String, completion: (Goal?)->Unit) {
@@ -32,7 +30,7 @@ object GoalDAO {
     }
 
     fun getGoals(completion: (Goal?)->Unit) {
-        mDatabase.child("user-goals").child(currentUser?.uid).orderByChild("time").addChildEventListener(object : ChildEventListener{
+        mDatabase.child("user-goals").child(FirebaseAuth.getInstance().currentUser?.uid).orderByChild("time").addChildEventListener(object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError?) {}
             override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
             override fun onChildChanged(p0: DataSnapshot?, p1: String?) {}
@@ -47,7 +45,7 @@ object GoalDAO {
         val gidRef = mDatabase.child("goals").push()
         val gid = gidRef.key
         gidRef.setValue(goal)
-        mDatabase.child("user-goals").child(currentUser?.uid).child(gid).setValue(0)
+        mDatabase.child("user-goals").child(FirebaseAuth.getInstance().currentUser?.uid).child(gid).setValue(0)
         for (tag in tags) {
             mDatabase.child("goal-tags").child(gid).child(tag).setValue(0)
             mDatabase.child("tag-goals").child(tag).child(gid).setValue(0)
@@ -58,7 +56,6 @@ object GoalDAO {
         var tags = arrayListOf<String>()
         mDatabase.child("goal-tags").child(goal.gid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot?) {
-                Log.d("Returning tags", tags.toString())
                 completion(tags)
             }
             override fun onCancelled(p0: DatabaseError?) {}
@@ -70,7 +67,6 @@ object GoalDAO {
             override fun onChildRemoved(p0: DataSnapshot?) {}
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
                 tags.add(p0?.key!!)
-                Log.d("Added Tag", tags.toString())
             }
         })
     }
@@ -80,13 +76,14 @@ object GoalDAO {
             mDatabase.child("goals").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot?) {
                     val goals = ArrayList<Goal>()
-                    val goalsMap = p0?.children
-                    for (child in goalsMap!!.iterator()) {
-                        val item = child.getValue(Goal::class.java)
-                        item?.gid = child.key
-                        goals.add(item!!)
+                    for (child in p0?.children?.iterator()!!) {
+                        if (child.key in goalsList) {
+                            val item = child.getValue(Goal::class.java)
+                            item?.gid = child.key
+                            goals.add(item!!)
+                        }
                     }
-                    Log.d("Similar Goals", "Snapshot: $goals")
+                    Log.d("Similar Goals", "Return from get: $goals")
                     completion(goals)
                 }
                 override fun onCancelled(p0: DatabaseError?) {}
@@ -95,35 +92,36 @@ object GoalDAO {
     }
 
     fun getSimilarGoalList(goal: Goal, completion: (List<String>) -> Unit) {
-        var goalHashMap = HashMap<String, Int>()
-        getTags(goal) {tags ->
-            mDatabase.child("tag-goals").addChildEventListener(object: ChildEventListener{
-                override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-                    if (p0?.key in tags) {
-
-                        val goals = p0?.value as HashMap<*, *>
-                        for (goal in goals.keys) {
-                            if (goal in goalHashMap.keys) {
-                                goalHashMap[goal as String] = goalHashMap[goal]?.plus(1)!!
-                            } else {
-                                goalHashMap[goal as String] = 1
+        getTags(goal) { tags ->
+            mDatabase.child("tag-goals").addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(p0: DataSnapshot?) {
+                    val goalHashMap = HashMap<String, Int>()
+                    for (child in p0?.children?.iterator()!!) {
+                        Log.d("Similar Goals", "Child: $child")
+                        if (child.key in tags) {
+                            for (item in child.children) {
+                                if (item.key in goalHashMap.keys) {
+                                    goalHashMap[item.key] = goalHashMap[item.key]?.plus(1)!!
+                                } else {
+                                    goalHashMap[item.key] = 1
+                                }
                             }
                         }
                     }
-                }
-                override fun onCancelled(p0: DatabaseError?) {}
-                override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
-                override fun onChildChanged(p0: DataSnapshot?, p1: String?) {}
-                override fun onChildRemoved(p0: DataSnapshot?) {}
-            })
-            mDatabase.child("tag-goals").addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(p0: DataSnapshot?) {
                     val goalList = ArrayList<String>()
-                    for (pair in goalHashMap.toList().sortedByDescending { (_, value) -> value }) {
-                        goalList.add(pair.first)
-                    }
-                    Log.d("Similar Goals Map", goalHashMap.toString())
-                    completion(goalList)
+                    mDatabase.child("user-goals").child(FirebaseAuth.getInstance().currentUser?.uid)
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(p0: DataSnapshot?) {
+                                    for (pair in goalHashMap.toList().sortedByDescending { (_, value) -> value }) {
+                                        if (!p0?.hasChild(pair.first)!!) {
+                                            goalList.add(pair.first)
+                                        }
+                                    }
+                                    Log.d("Similar Goals", "Return from Goal List $goalList")
+                                    completion(goalList)
+                                }
+                                override fun onCancelled(p0: DatabaseError?) {}
+                            })
                 }
                 override fun onCancelled(p0: DatabaseError?) {}
             })

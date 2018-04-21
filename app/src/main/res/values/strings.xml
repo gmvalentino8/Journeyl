@@ -13,7 +13,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="milestone_ratings">Milestone Ratings</string>
     <string name="rating_1">Difficulty</string>
-    <string name="rating_2">Efforts</string>
+    <string name="rating_2">Effort</string>
     <string name="rating_3">Usefulness</string>
     <string name="rating_4">Perceived level</string>
     <string name="reflection">Written Reflection</string>

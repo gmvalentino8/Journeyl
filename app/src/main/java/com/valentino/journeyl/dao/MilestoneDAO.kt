@@ -15,12 +15,10 @@ import com.valentino.journeyl.model.Milestone
 
 object MilestoneDAO {
     private val mDatabase: DatabaseReference
-    val currentUser: FirebaseUser?
 
     init {
         val mInstance = FirebaseDatabase.getInstance()
         mDatabase = mInstance.reference
-        currentUser = FirebaseAuth.getInstance().currentUser
     }
 
     fun getMilestone(mid: String, completion: (Milestone?)->Unit) {
@@ -78,8 +76,22 @@ object MilestoneDAO {
     }
 
 
-    fun getRelatedMilestones(goalsList: List<String>, completion: (Pair<Milestone, Goal>) -> Unit) {
-
+    fun getRelatedMilestones(goal: Goal, completion: (Pair<Milestone, Goal>) -> Unit) {
+        GoalDAO.getSimilarGoals(goal) {goalList ->
+            for (goalItem in goalList) {
+                mDatabase.child("goal-milestones").child(goalItem.gid).addListenerForSingleValueEvent( object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError?) {}
+                    override fun onDataChange(p0: DataSnapshot?) {
+                        for (milestone in p0?.children?.iterator()!!) {
+                            getMilestone(milestone.key) {
+                                Log.d("Similar Milestones", "Return item: $it, $goalItem")
+                                completion(Pair(it!!, goalItem))
+                            }
+                        }
+                    }
+                })
+            }
+        }
     }
 
 }
