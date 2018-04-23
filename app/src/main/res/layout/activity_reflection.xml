@@ -234,8 +234,10 @@
                         android:gravity="start|top"
                         android:padding="10dp"
                         android:textSize="18sp"
+                        android:ellipsize="none"
+                        android:scrollHorizontally="false"
                         android:background="@drawable/style_login_field"
-                        android:inputType="text"/>
+                        android:inputType="text|textMultiLine"/>
 
                 </RelativeLayout>
 

@@ -57,7 +57,9 @@
                     android:padding="10dp"
                     android:textSize="18sp"
                     android:background="@drawable/style_login_field"
-                    android:inputType="text"/>
+                    android:ellipsize="none"
+                    android:scrollHorizontally="false"
+                    android:inputType="text|textMultiLine"/>
 
             </RelativeLayout>
 
